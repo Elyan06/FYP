@@ -1,15 +1,15 @@
 
 import { TestDbConnection } from "@/components/TestDbConnection";
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import Features from "@/components/Features";
-import HowItWorks from "@/components/HowItWorks";
-import SampleComparison from "@/components/SampleComparison";
-import UploadSection from "@/components/UploadSection";
-import HistorySection from "@/components/HistorySection";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
-import ChatWidget from "@/components/ChatWidget";
+import Header from "@/components/layout/Header";
+import HeroSection from "@/components/sections/HeroSection";
+import Features from "@/components/sections/Features";
+import HowItWorks from "@/components/sections/HowItWorks";
+import SampleComparison from "@/components/sections/SampleComparison";
+import UploadSection from "@/components/sections/UploadSection";
+import HistorySection from "@/components/sections/HistorySection";
+import FAQ from "@/components/sections/FAQ";
+import Footer from "@/components/layout/Footer";
+import ChatWidget from "@/components/common/ChatWidget";
 
 const Index = () => {
   return (
