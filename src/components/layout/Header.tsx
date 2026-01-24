@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Leaf, UserCircle, LogIn } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const NavAnchor = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

@@ -1,6 +1,6 @@
 
 import { ArrowRight, Scan, Sparkles, Activity, Shield, Zap } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {

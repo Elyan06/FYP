@@ -1,5 +1,4 @@
 
-import { TestDbConnection } from "@/components/TestDbConnection";
 import Header from "@/components/layout/Header";
 import HeroSection from "@/components/sections/HeroSection";
 import Features from "@/components/sections/Features";
@@ -29,11 +28,6 @@ const Index = () => {
         <SampleComparison />
 
         {/* Upload & Detection Section */}
-        {import.meta.env.DEV && (
-          <div className="container-tight mx-auto px-4 py-4">
-            <TestDbConnection />
-          </div>
-        )}
         <UploadSection />
 
         {/* History Section */}
