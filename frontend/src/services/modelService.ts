@@ -34,7 +34,7 @@ export const loadModel = async () => {
 // Preprocess the image before prediction
 export const preprocessImage = (image: HTMLImageElement): tf.Tensor => {
   // Convert image to tensor
-  let tensor = tf.browser.fromPixels(image)
+  const tensor = tf.browser.fromPixels(image)
     .resizeNearestNeighbor([256, 256]) // Resize to match model's expected input
     .toFloat()
     .div(255.0) // Normalize to [0,1]
