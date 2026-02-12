@@ -8,46 +8,43 @@
   :root {
     /* Premium Agriculture-Inspired Color Palette */
 
-    /* Primary - Deep Leaf Green for vitality and growth */
-    --primary: 142 76% 36%;
-    /* #16A34A - Rich Leaf Green */
+    /* Primary - Leaf Green (#2E7D32) */
+    --primary: 123 46% 34%;
+    /* #2E7D32 */
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Forest Green for stability and trust */
-    --secondary: 145 63% 15%;
-    /* #064E3B - Deep Forest Green */
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Light Green (#A5D6A7) */
+    --secondary: 122 39% 74%;
+    /* #A5D6A7 */
+    --secondary-foreground: 145 63% 10%;
 
-    /* Accent - Soft Lime for freshness and innovation */
-    --accent: 84 81% 44%;
-    /* #84CC16 - Lime Green */
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Soft Yellow/Orange (#FFB74D) */
+    --accent: 36 100% 65%;
+    /* #FFB74D */
+    --accent-foreground: 145 63% 10%;
 
-    /* Background - Very light green-gray tint for natural feel */
-    --background: 120 15% 98%;
-    /* #F7FAF7 */
+    /* Background - Off-white/Light Gray (#F5F5F5) */
+    --background: 0 0% 96%;
+    /* #F5F5F5 */
     --foreground: 145 63% 10%;
     /* #022C22 - Very Deep Green */
 
     /* Card backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 145 63% 10%;
 
     /* Muted tones */
-    --muted: 220 14% 91%;
-    /* #E2E8F0 */
-    --muted-foreground: 215 16% 47%;
-    /* #64748B - Slate 500 */
+    --muted: 120 10% 94%;
+    --muted-foreground: 120 10% 40%;
 
     /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 145 63% 10%;
 
-    /* Border - Subtle Gray */
-    --border: 220 13% 91%;
-    /* #E2E8F0 */
-    --input: 220 13% 91%;
-    --ring: 191 91% 55%;
+    /* Border - Subtle Green-Gray */
+    --border: 120 10% 90%;
+    --input: 120 10% 90%;
+    --ring: 123 46% 34%;
 
     /* Destructive - Vibrant Red */
     --destructive: 0 84% 60%;

@@ -17,6 +17,7 @@ const UploadSection = () => {
     disease: string;
     confidence: number;
     isHealthy: boolean;
+    description: string;
   } | null>(null);
   const { toast } = useToast();
 
@@ -66,7 +67,10 @@ const UploadSection = () => {
       setAnalysisProgress(100);
 
       setTimeout(() => {
-        setPrediction(result);
+        setPrediction({
+          ...result,
+          description: getDiseaseDescription(result.disease)
+        });
       }, 300);
 
       // Save to history
@@ -88,7 +92,7 @@ const UploadSection = () => {
       console.error('Error analyzing image:', error);
       toast({
         title: 'Analysis Failed',
-        description: 'Failed to analyze the image. Please try again.',
+        description: 'Please upload a clear leaf image and try again.',
         variant: 'destructive',
       });
     } finally {
@@ -137,7 +141,7 @@ const UploadSection = () => {
         console.error('Error detecting disease:', error);
         toast({
           title: 'Error',
-          description: 'Failed to analyze the image. Please try again.',
+          description: 'Please upload a clear leaf image.',
           variant: 'destructive',
         });
       }
@@ -172,6 +176,26 @@ const UploadSection = () => {
     return recommendations[formattedDisease] || recommendations['default'];
   }, []);
 
+  const getDiseaseDescription = useCallback((disease: string): string => {
+    const descriptions: Record<string, string> = {
+      'Bacterial Spot': 'Bacterial spot is caused by Xanthomonas bacteria, leading to small, dark lesions on leaves and fruit.',
+      'Early Blight': 'Early blight is a fungal disease affecting tomato leaves, characterized by concentric rings within dark spots.',
+      'Late Blight': 'Late blight is a destructive fungal-like disease that causes rapid decay and water-soaked spots on leaves.',
+      'Leaf Mold': 'Leaf mold is a fungal disease that causes yellow spots on the upper leaf surface and gray mold on the underside.',
+      'Septoria Leaf Spot': 'Septoria leaf spot causes numerous small, circular spots with dark borders and gray centers on older leaves.',
+      'Spider Mites': 'Spider mites are tiny pests that suck sap from leaves, causing stippling, yellowing, and fine webbing.',
+      'Target Spot': 'Target spot is a fungal disease characterized by brown lesions with concentric rings, resembling a target.',
+      'Yellow Leaf Curl Virus': 'Yellow leaf curl virus is a viral disease transmitted by whiteflies, causing upward curling, yellowing, and stunting.',
+      'Mosaic Virus': 'Mosaic virus causes mottled patterns of light and dark green on leaves, often stunting growth and reducing yield.',
+      'Healthy': 'The plant appears healthy with no visible signs of disease or nutritional deficiencies.',
+      'default': 'Symptoms of a plant disease have been detected. Please investigate further.'
+    };
+
+    const formattedDisease = formatDiseaseName(disease);
+    if (formattedDisease.toLowerCase().includes('healthy')) return descriptions['Healthy'];
+    return descriptions[formattedDisease] || descriptions['default'];
+  }, [formatDiseaseName]);
+
   return (
     <section id="detect" className="section-padding relative overflow-hidden bg-gradient-to-b from-white to-muted/30">
       {/* Decorative Elements */}
@@ -194,7 +218,7 @@ const UploadSection = () => {
             Upload & Analyze
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Upload a clear photo of your tomato or pepper plant leaf. Our CNN-based AI will analyze it in seconds.
+            Upload a clear photo of your tomato or pepper plant leaf. Our AI model will analyze it to detect diseases.
           </p>
         </motion.div>
 
@@ -381,6 +405,14 @@ const UploadSection = () => {
                       </p>
                     </div>
                   )}
+
+                  {/* Disease Description */}
+                  <div className="mb-6 space-y-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Description</span>
+                    <p className="text-foreground text-sm leading-relaxed">
+                      {prediction.description}
+                    </p>
+                  </div>
 
                   {/* Recommendation */}
                   <div className="space-y-3 flex-grow">

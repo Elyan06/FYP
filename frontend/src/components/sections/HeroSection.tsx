@@ -48,12 +48,12 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight text-foreground"
           >
-            <span className="text-foreground">Protect Your Tomato & Pepper</span>
+            AI-Powered Plant Disease
             <br />
             <span className="text-gradient-primary">
-              Crops with AI
+              Detection for Farmers
             </span>
           </motion.h1>
 
@@ -62,9 +62,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed"
+            className="max-w-2xl mx-auto text-lg md:text-2xl text-muted-foreground mb-10 leading-relaxed font-medium"
           >
-            Upload a photo of your plant leaves and our advanced AI will instantly detect diseases, helping you take action before it's too late.
+            Upload a leaf image and get instant disease diagnosis.
           </motion.p>
 
           {/* CTA Button */}

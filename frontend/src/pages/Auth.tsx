@@ -184,7 +184,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex relative overflow-hidden bg-background">
+    <div className="h-screen flex relative overflow-hidden bg-background">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 z-10" />
@@ -192,36 +192,36 @@ const Auth = () => {
         <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
-      {/* Left side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden z-20 items-center justify-center p-12">
+      {/* Left side - Branding - Hidden on mobile/small screens for more space */}
+      <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden z-20 items-center justify-center p-8 border-r border-white/20 bg-white/30 backdrop-blur-md">
         <div className="max-w-md w-full">
-          <div className="w-20 h-20 rounded-3xl bg-primary/10 backdrop-blur-sm flex items-center justify-center mb-8 border border-primary/20 shadow-glow-primary">
-            <Leaf className="w-12 h-12 text-primary" />
+          <div className="w-16 h-16 rounded-2xl bg-primary/10 backdrop-blur-sm flex items-center justify-center mb-6 border border-primary/20 shadow-glow-primary">
+            <Leaf className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-5xl font-bold text-foreground mb-6 leading-tight">
-            Advanced Intelligence for <span className="text-primary font-extrabold italic underline decoration-accent/30 underline-offset-8">Sustainable</span> Farming
+          <h1 className="text-4xl font-bold text-foreground mb-4 leading-tight">
+            Advanced Intelligence for <span className="text-primary font-extrabold italic underline decoration-accent/30 underline-offset-4">Sustainable</span> Farming
           </h1>
-          <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
             Join thousands of modern farmers using AI to protect their crops and optimize health in real-time.
           </p>
 
-          <div className="space-y-6 text-foreground/80">
-            <div className="flex items-center gap-4 bg-white/50 backdrop-blur-sm p-4 rounded-2xl border border-white/50 shadow-soft">
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-6 h-6 text-primary" />
+          <div className="space-y-4 text-foreground/80 text-sm">
+            <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm p-3 rounded-xl border border-white/50 shadow-soft">
+              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="font-bold">Verified Accuracy</div>
-                <div className="text-sm text-muted-foreground">95% success rate in field tests</div>
+                <div className="text-muted-foreground xs">95% success rate</div>
               </div>
             </div>
-            <div className="flex items-center gap-4 bg-white/50 backdrop-blur-sm p-4 rounded-2xl border border-white/50 shadow-soft">
-              <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-accent" />
+            <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm p-3 rounded-xl border border-white/50 shadow-soft">
+              <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <div className="font-bold">Instant Diagnosis</div>
-                <div className="text-sm text-muted-foreground">Results in under 2 seconds</div>
+                <div className="text-muted-foreground xs">Results in under 2 seconds</div>
               </div>
             </div>
           </div>
@@ -229,129 +229,130 @@ const Auth = () => {
       </div>
 
       {/* Right side - Auth Form */}
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 relative z-20">
+      <div className="flex-1 flex items-center justify-center p-4 relative z-20 h-full overflow-y-auto">
         <Link
           to="/"
-          className="absolute top-6 left-6 flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-all group"
+          className="absolute top-4 left-4 flex items-center text-xs font-medium text-muted-foreground hover:text-primary transition-all group z-50"
         >
-          <div className="w-8 h-8 rounded-full bg-white shadow-soft flex items-center justify-center mr-2 group-hover:scale-110 transition-transform">
+          <div className="w-8 h-8 rounded-full bg-white/80 shadow-soft flex items-center justify-center mr-2 group-hover:scale-110 transition-transform">
             <ArrowLeft className="w-4 h-4" />
           </div>
-          Back to Platform
+          <span className="hidden sm:inline">Back</span>
         </Link>
 
-        <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-[2.5rem] shadow-medium border border-white/50 relative overflow-hidden">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 mb-4 lg:hidden">
-              <Leaf className="w-6 h-6 text-primary" />
+        {/* Auth Card Container - maximizing space usage */}
+        <div className="w-full max-w-md bg-white/90 backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] shadow-medium border border-white/50 relative">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 mb-2 lg:hidden">
+              <Leaf className="w-5 h-5 text-primary" />
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground mb-3">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground mb-1">
               {isLogin ? "Welcome Back" : "Get Started"}
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {isLogin
-                ? "Enter your credentials to manage your farm profile"
-                : "Create your agricultural precision account today"}
+                ? "Manage your farm profile"
+                : "Create your success account"}
             </p>
           </div>
 
-          <form onSubmit={handleAuth} className="space-y-5">
+          <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="fullName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50" />
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-primary/50" />
                     <Input
                       id="fullName"
                       placeholder="Jane Farmer"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="pl-10 h-12 bg-white/50 border-primary/10 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      className="pl-9 h-10 text-sm bg-white/50 border-primary/10 focus:border-primary focus:ring-primary/20 transition-all rounded-lg"
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Your Role</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="role" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Role</Label>
                   <Select onValueChange={setRole} defaultValue={role}>
-                    <SelectTrigger className="h-12 bg-white/50 border-primary/10 focus:border-primary rounded-xl">
-                      <SelectValue placeholder="Select role" />
+                    <SelectTrigger className="h-10 text-sm bg-white/50 border-primary/10 focus:border-primary rounded-lg pl-3 pr-2">
+                      <SelectValue placeholder="Role" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl border-primary/10">
-                      <SelectItem value="farmer">Modern Farmer</SelectItem>
-                      <SelectItem value="researcher">Agricultural Researcher</SelectItem>
-                      <SelectItem value="student">Student / Academic</SelectItem>
-                      <SelectItem value="other">Other Professional</SelectItem>
+                    <SelectContent className="rounded-lg border-primary/10">
+                      <SelectItem value="farmer">Farmer</SelectItem>
+                      <SelectItem value="researcher">Researcher</SelectItem>
+                      <SelectItem value="student">Student</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-primary/50" />
                 <Input
                   id="email"
                   type="email"
                   placeholder="name@farm.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 h-12 bg-white/50 border-primary/10 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                  className="pl-9 h-10 text-sm bg-white/50 border-primary/10 focus:border-primary focus:ring-primary/20 transition-all rounded-lg"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder="••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="h-12 bg-white/50 border-primary/10 focus:border-primary rounded-xl"
+                    className="h-10 text-sm bg-white/50 border-primary/10 focus:border-primary rounded-lg pr-8"
                   />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                    {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                   </button>
                 </div>
               </div>
 
               {!isLogin && (
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Confirm</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="confirmPassword" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground ml-1">Confirm</Label>
                   <Input
                     id="confirmPassword"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder="••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={`h-12 bg-white/50 border-primary/10 focus:border-primary rounded-xl ${errors.confirmPassword ? "border-destructive" : ""}`}
+                    className={`h-10 text-sm bg-white/50 border-primary/10 focus:border-primary rounded-lg ${errors.confirmPassword ? "border-destructive" : ""}`}
                   />
                 </div>
               )}
             </div>
 
             {!isLogin && (
-              <div className="flex items-start space-x-3 py-2">
+              <div className="flex items-start space-x-2 py-1">
                 <Checkbox
                   id="terms"
                   checked={agreeTerms}
                   onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
-                  className="mt-1 border-primary/30 data-[state=checked]:bg-primary"
+                  className="mt-0.5 w-4 h-4 border-primary/30 data-[state=checked]:bg-primary rounded-sm"
                 />
-                <Label htmlFor="terms" className="text-sm leading-snug text-muted-foreground font-normal">
-                  I agree to the <Link to="#" className="text-primary font-bold hover:underline">Terms of Service</Link> and <Link to="#" className="text-primary font-bold hover:underline">Privacy Policy</Link>.
+                <Label htmlFor="terms" className="text-xs leading-tight text-muted-foreground font-normal cursor-pointer">
+                  Agree to <Link to="#" className="text-primary font-bold hover:underline">Terms</Link> & <Link to="#" className="text-primary font-bold hover:underline">Privacy</Link>.
                 </Label>
               </div>
             )}
 
             {Object.values(errors).some(err => err) && (
-              <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-xl text-xs text-destructive flex items-center gap-2">
+              <div className="p-2 bg-destructive/10 border border-destructive/20 rounded-lg text-[10px] text-destructive flex items-center gap-1.5">
                 <div className="w-1 h-1 rounded-full bg-destructive shrink-0" />
                 {Object.values(errors).find(err => err)}
               </div>
@@ -360,54 +361,51 @@ const Auth = () => {
             <Button
               type="submit"
               variant="premium"
-              className="w-full h-14 rounded-2xl text-lg font-bold shadow-glow-primary"
+              className="w-full h-11 rounded-xl text-base font-bold shadow-glow-primary mt-1"
               disabled={loading}
             >
               {loading ? (
                 <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   <span>Processing...</span>
                 </div>
               ) : isLogin ? (
-                "Login to Account"
+                "Login"
               ) : (
-                "Create Farm Profile"
+                "Create Account"
               )}
             </Button>
           </form>
 
-          <div className="mt-8">
-            <div className="relative mb-6">
+          <div className="mt-5">
+            <div className="relative mb-4">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-primary/10" />
               </div>
-              <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                <span className="bg-white px-4 text-muted-foreground font-bold">Or continue with</span>
+              <div className="relative flex justify-center text-[10px] uppercase tracking-widest">
+                <span className="bg-white px-2 text-muted-foreground font-semibold">Or continue with</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" onClick={() => signInWithOAuth('google')} className="h-12 rounded-xl border-primary/10 hover:bg-primary/5 transition-all">
-                <Github size={18} className="mr-2" /> Google
-              </Button>
-              <Button variant="outline" onClick={() => signInWithOAuth('github')} className="h-12 rounded-xl border-primary/10 hover:bg-primary/5 transition-all">
-                <Github size={18} className="mr-2" /> GitHub
+            <div className="grid grid-cols-1 gap-3">
+              <Button variant="outline" onClick={() => signInWithOAuth('google')} className="h-10 text-sm rounded-lg border-primary/10 hover:bg-primary/5 transition-all">
+                Continue with Google
               </Button>
             </div>
 
-            <div className="text-center mt-8">
+            <div className="text-center mt-5">
               <button
                 type="button"
                 onClick={() => {
                   setIsLogin(!isLogin);
                   setErrors({});
                 }}
-                className="text-muted-foreground text-sm hover:text-primary transition-colors"
+                className="text-muted-foreground text-xs hover:text-primary transition-colors"
               >
                 {isLogin ? (
-                  <>New to the platform? <span className="text-primary font-bold underline underline-offset-4">Register here</span></>
+                  <>New here? <span className="text-primary font-bold hover:underline">Register now</span></>
                 ) : (
-                  <>Already have an account? <span className="text-primary font-bold underline underline-offset-4">Login here</span></>
+                  <>Have an account? <span className="text-primary font-bold hover:underline">Login</span></>
                 )}
               </button>
             </div>
