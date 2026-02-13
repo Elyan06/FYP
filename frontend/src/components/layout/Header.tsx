@@ -75,7 +75,7 @@ const Header = () => {
           <div className="flex items-center gap-3 pl-6 border-l border-border/50">
             <Link to="/auth?mode=login">
               <Button variant="ghost" size="sm" className="font-normal hover:text-primary">
-                Sign In
+                Login
               </Button>
             </Link>
             <Link to="/auth?mode=signup">
@@ -109,7 +109,7 @@ const Header = () => {
 
             <Link to="/auth?mode=login" onClick={toggleMenu}>
               <Button variant="outline" className="w-full justify-start border-border/50">
-                Sign In
+                Login
               </Button>
             </Link>
             <Link to="/auth?mode=signup" onClick={toggleMenu}>
