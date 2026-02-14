@@ -2,10 +2,13 @@ import { useState, useCallback } from "react";
 import { Upload, Image, Loader2, CheckCircle, XCircle, ScanLine, Leaf, AlertCircle, ArrowUpCircle } from "lucide-react";
 import { predictDisease, createImageElement } from "@/services/modelService";
 import { savePrediction } from "@/services/historyService";
+import { predictDiseaseWithGemini } from "@/services/geminiModelService";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { Sparkles, Activity } from "lucide-react";
 
 const UploadSection = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -13,11 +16,13 @@ const UploadSection = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [useCloudAI, setUseCloudAI] = useState(false);
   const [prediction, setPrediction] = useState<{
     disease: string;
     confidence: number;
     isHealthy: boolean;
     description: string;
+    treatment?: string;
   } | null>(null);
   const { toast } = useToast();
 
@@ -45,6 +50,7 @@ const UploadSection = () => {
       setIsAnalyzing(true);
       setPrediction(null);
       setAnalysisProgress(0);
+      setUseCloudAI(false);
 
       // Simulate progress for better UX
       const progressInterval = setInterval(() => {
@@ -57,42 +63,66 @@ const UploadSection = () => {
         });
       }, 150);
 
+      console.log('Starting image analysis...');
+
       // Create image element
       const img = await createImageElement(file);
 
-      // Make prediction
-      const result = await predictDisease(img);
+      let finalResult;
+
+      try {
+        // Try local prediction first
+        console.log('Attempting local prediction...');
+        const result = await predictDisease(img);
+        console.log('Local prediction successful:', result);
+        finalResult = {
+          ...result,
+          description: getDiseaseDescription(result.disease)
+        };
+      } catch (localError) {
+        console.warn('Local model failed or missing, falling back to Gemini Cloud AI:', localError);
+        setUseCloudAI(true);
+
+        // Fallback to Gemini
+        const geminiResult = await predictDiseaseWithGemini(uploadedImage!);
+        console.log('Gemini Cloud AI prediction successful:', geminiResult);
+
+        finalResult = {
+          disease: geminiResult.disease,
+          confidence: geminiResult.confidence,
+          isHealthy: geminiResult.isHealthy,
+          description: geminiResult.description,
+          treatment: geminiResult.treatment
+        };
+      }
 
       clearInterval(progressInterval);
       setAnalysisProgress(100);
 
-      setTimeout(() => {
-        setPrediction({
-          ...result,
-          description: getDiseaseDescription(result.disease)
-        });
-      }, 300);
-
-      // Save to history
-      await savePrediction(
-        result.disease,
-        result.confidence,
-        result.isHealthy,
-        uploadedImage || undefined
-      );
+      // Set prediction immediately for UI feedback
+      setPrediction(finalResult);
+      console.log('UI state updated with prediction');
 
       // Show result toast
       toast({
-        title: result.isHealthy ? '✓ Plant is Healthy!' : '⚠ Disease Detected',
-        description: `${formatDiseaseName(result.disease)} (${result.confidence}% confidence)`,
-        variant: result.isHealthy ? 'default' : 'destructive',
+        title: finalResult.isHealthy ? '✓ Plant is Healthy!' : '⚠ Disease Detected',
+        description: `${formatDiseaseName(finalResult.disease)} (${finalResult.confidence}% confidence)`,
+        variant: finalResult.isHealthy ? 'default' : 'destructive',
       });
+
+      // Save to history in background - don't await to avoid UI blockage
+      savePrediction(
+        finalResult.disease,
+        finalResult.confidence,
+        finalResult.isHealthy,
+        uploadedImage || undefined
+      ).catch(err => console.error('Background history save failed:', err));
 
     } catch (error) {
       console.error('Error analyzing image:', error);
       toast({
         title: 'Analysis Failed',
-        description: 'Please upload a clear leaf image and try again.',
+        description: 'Could not analyze the image. Please check your connection and try again.',
         variant: 'destructive',
       });
     } finally {
@@ -149,13 +179,25 @@ const UploadSection = () => {
   }, [currentFile, toast]);
 
   const formatDiseaseName = useCallback((disease: string) => {
-    return disease
+    // Handle the triple underscore and potential spacing issues
+    // Example: "Tomato___Bacterial_spot" -> "Bacterial Spot"
+    let name = disease
       .replace(/_/g, ' ')
-      .replace(/\b\w/g, l => l.toUpperCase())
-      .replace('Tomato ', '')
-      .replace('Pepper ', '')
-      .replace('Two Spotted Spider Mite', 'Spider Mites')
-      .replace('Yellow Leaf Curl Virus', 'Yellow Leaf Curl');
+      .replace(/\b(Tomato|Pepper)\b/gi, '') // Remove plant name
+      .trim();
+
+    // Capitalize each word properly
+    name = name.split(/\s+/)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+
+    // Specific overrides for consistency
+    if (name.includes('Two Spotted Spider Mite')) return 'Spider Mites';
+    if (name.includes('Yellow Leaf Curl Virus')) return 'Yellow Leaf Curl Virus';
+    if (name.includes('Mosaic Virus')) return 'Mosaic Virus';
+    if (name.includes('Healthy')) return 'Healthy';
+
+    return name;
   }, []);
 
   const getDiseaseRecommendation = useCallback((disease: string): string => {
@@ -372,10 +414,18 @@ const UploadSection = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="premium-card p-8 h-full flex flex-col"
                 >
-                  <h3 className="text-xl font-semibold mb-6 text-foreground flex items-center gap-2">
-                    <ScanLine className="w-5 h-5 text-primary" />
-                    Step 2: Analysis Result
-                  </h3>
+                  <div className="flex justify-between items-start mb-6">
+                    <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                      <ScanLine className="w-5 h-5 text-primary" />
+                      Step 2: Analysis Result
+                    </h3>
+                    {useCloudAI && (
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 flex gap-1.5 py-1 px-3">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Cloud AI Active
+                      </Badge>
+                    )}
+                  </div>
 
                   {/* Result Badge */}
                   <div className="flex items-center gap-4 mb-6">
@@ -390,8 +440,13 @@ const UploadSection = () => {
                       <h4 className="text-2xl font-bold text-foreground">
                         {prediction.isHealthy ? 'Healthy Plant ✓' : 'Disease Detected'}
                       </h4>
-                      <p className="text-muted-foreground">
+                      <p className="text-muted-foreground flex items-center gap-2">
                         Confidence: <span className="text-primary font-semibold">{prediction.confidence}%</span>
+                        {useCloudAI && (
+                          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider bg-muted px-1.5 py-0.5 rounded-sm">
+                            <Activity className="w-3 h-3" /> Enhanced
+                          </span>
+                        )}
                       </p>
                     </div>
                   </div>
@@ -420,8 +475,8 @@ const UploadSection = () => {
                       <Leaf className="w-4 h-4 text-primary" />
                       RECOMMENDED ACTION
                     </div>
-                    <div className="bg-muted/50 p-5 rounded-xl border border-border text-sm leading-relaxed text-foreground">
-                      {getDiseaseRecommendation(prediction.disease)}
+                    <div className="bg-muted/50 p-5 rounded-xl border border-border text-sm leading-relaxed text-foreground whitespace-pre-wrap">
+                      {prediction.treatment || getDiseaseRecommendation(prediction.disease)}
                     </div>
                   </div>
 
