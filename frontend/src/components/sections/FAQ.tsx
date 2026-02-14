@@ -8,24 +8,32 @@ import {
 
 const faqs = [
     {
-        question: "How accurate is the detection model?",
-        answer: "Our model currently achieves a 98.5% validation accuracy on the benchmark dataset. However, real-world results may vary depending on lighting and image quality."
-    },
-    {
-        question: "Is my data private?",
-        answer: "Yes. LeafGuardAI runs entirely in your browser using TensorFlow.js. Your photos are never uploaded to any server, ensuring complete privacy."
+        question: "What is LeafGuardAI?",
+        answer: "LeafGuardAI is an AI-powered system that detects diseases in plant leaves. You simply upload a leaf image, and the system analyzes it to determine whether the plant is healthy or affected."
     },
     {
         question: "Which plants are supported?",
-        answer: "Currently, we specialize in Tomato and Pepper plants. We support detection for common diseases like Early Blight, Late Blight, Bacterial Spot, and more."
+        answer: "Currently, the system supports tomato and pepper plants. More crops may be added in future updates as the model is trained on additional datasets."
     },
     {
-        question: "Does it work offline?",
-        answer: "Yes! Once the website loads, the model is cached in your browser. You can use the detection feature even without an active internet connection."
+        question: "How does the system detect diseases?",
+        answer: "LeafGuardAI uses a Convolutional Neural Network (CNN) trained on thousands of leaf images. The model identifies disease patterns based on color, texture, and shape."
     },
     {
-        question: "Is this tool free to use?",
-        answer: "LeafGuardAI is currently a free research prototype. We believe in open access to agricultural technology."
+        question: "How accurate is the detection?",
+        answer: "The system provides high accuracy when the image is clear and well-fit. However, results may vary depending on image quality and leaf visibility."
+    },
+    {
+        question: "Do I need an account to use the system?",
+        answer: "Yes, creating an account allows you to save your detection history and access previous results. It also helps manage your profile and uploaded images."
+    },
+    {
+        question: "Can this system replace an agricultural expert?",
+        answer: "No, the system is designed as a support tool for quick detection. For serious plant health issues, consulting an agricultural expert is recommended."
+    },
+    {
+        question: "Is my data safe and is LeafGuardAI free to use?",
+        answer: "Yes, user data and images are stored securely using modern authentication and database systems, and your information is not shared without permission. The system is currently free for educational and research purposes, with possible additional features in future versions."
     }
 ];
 
