@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Large files
-trained_model/
 .venv/
