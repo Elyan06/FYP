@@ -98,7 +98,7 @@ const UploadSection = () => {
       console.error('Error analyzing image:', error);
       toast({
         title: 'Analysis Failed',
-        description: 'The AI model could not process this image. Please ensure the plant leaf is clearly visible.',
+        description: error instanceof Error ? error.message : 'Unknown error occurred',
         variant: 'destructive',
       });
     } finally {

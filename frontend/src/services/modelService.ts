@@ -1,7 +1,10 @@
 import * as tf from '@tensorflow/tfjs';
 
 // Define the class names based on your model's output
+// Define the class names based on your model's output
 const CLASS_NAMES = [
+  'Pepper___Bacterial_spot',
+  'Pepper___healthy',
   'Tomato___Bacterial_spot',
   'Tomato___Early_blight',
   'Tomato___Late_blight',
@@ -11,9 +14,7 @@ const CLASS_NAMES = [
   'Tomato___Target_Spot',
   'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
   'Tomato___Tomato_mosaic_virus',
-  'Tomato___healthy',
-  'Pepper___Bacterial_spot',
-  'Pepper___healthy'
+  'Tomato___healthy'
 ];
 
 // Load the model
@@ -35,9 +36,9 @@ export const loadModel = async () => {
 export const preprocessImage = (image: HTMLImageElement): tf.Tensor => {
   // Convert image to tensor
   const tensor = tf.browser.fromPixels(image)
-    .resizeNearestNeighbor([256, 256]) // Resize to match model's expected input
+    .resizeBilinear([256, 256]) // Resize to match model's expected input
     .toFloat()
-    .div(255.0) // Normalize to [0,1]
+    .div(tf.scalar(255.0)) // Normalize to [0, 1] range
     .expandDims(); // Add batch dimension
 
   return tensor;
