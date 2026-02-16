@@ -21,7 +21,7 @@ const features = [
     {
         icon: Leaf,
         title: "38+ Disease Classes",
-        description: "Specialized detection for common tomato and pepper diseases with 95% accuracy."
+        description: "Specialized detection for common tomato and pepper diseases with 90% accuracy."
     },
     {
         icon: Cpu,

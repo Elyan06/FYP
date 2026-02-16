@@ -95,7 +95,7 @@ const HeroSection = () => {
           >
             {[
               { label: "Disease Classes", value: "38+", icon: Scan, color: "primary" },
-              { label: "Detection Accuracy", value: "95%", icon: Shield, color: "success" },
+              { label: "Detection Accuracy", value: "90%", icon: Shield, color: "success" },
               { label: "Analysis Time", value: "<2s", icon: Zap, color: "accent" },
             ].map((stat, i) => (
               <motion.div
